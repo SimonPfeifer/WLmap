@@ -18,10 +18,10 @@ If you don't have access to `readEagle` or want to modify `WLmap` to work with d
 
 ### Usage
 
-There are some examples in the script `example.py` which should explain the basic functionality. In brief, the main workflow is as follows:
+There is a working example in the script `example.py` which should explain the basic functionality. In brief, the main workflow is as follows:
 
 - Initialise; set path to simulation data, lightcone parameters, cosmology, etc.
 - Generate lightcone/lense planes
 - Generate convergence map
 - Generate shear maps
-- Save lightcone and maps to HDF5 file
+- Save lightcone and maps to seperate HDF5 files
