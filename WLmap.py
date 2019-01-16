@@ -191,13 +191,7 @@ class WLmap:
     def redshift_distribution(self, z, survey='cfhtlens_fit'):
         '''Return the probability from a normalised source redshift distribution for a particular survey for a given redshift.'''
         z = np.asarray(z)
-        if survey == 'cfhtlens_3d':
-            dist = np.loadtxt('/home/astspfei/Documents/Work/simulations/WLmap/cfhtlens_redshift_distribution_3d.txt')
-            n_s = np.interp(z, dist[:,0], dist[:,1]) / np.trapz(dist[:,1], dist[:,0])
-        elif survey == 'cfhtlens_2d':
-            dist = np.loadtxt('/home/astspfei/Documents/Work/simulations/WLmap/cfhtlens_redshift_distribution_2d.txt')
-            n_s = np.interp(z, dist[:,0], dist[:,1]) / np.trapz(dist[:,1], dist[:,0])
-        elif survey == 'cfhtlens_fit':
+        if survey == 'cfhtlens_fit':
             # arxiv.org/pdf/1303.1806.pdf
             n_s = 1.5 * np.exp(- (z-0.7)**2 / 0.32**2) + 0.2 * np.exp(-(z-1.2)**2 / 0.46**2)
         else:
