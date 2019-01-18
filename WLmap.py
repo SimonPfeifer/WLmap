@@ -19,10 +19,7 @@ class WLmap:
         elif load_lightcone is not None:
             self.load_header(filename=load_lightcone)
         else:
-            if os.path.isdir(sim_dir):
-                self.sim_dir = sim_dir
-            else:
-                raise ValueError('Simulation directory does not exist: {}'.format(sim_dir))
+            self.sim_dir = sim_dir
             self.z_max = float(z_max)
             self.opening_angle = float(opening_angle) #in degrees
             self.plane_sep = int(plane_sep) #in Mpc h^-1
@@ -31,6 +28,8 @@ class WLmap:
                 self.seed = np.random.randint(1E6)
             else:
                 self.seed = seed
+        if not os.path.isdir(sim_dir):
+            raise ValueError('Simulation directory does not exist: {}'.format(sim_dir))
         if output_dir is not None:
             if os.path.isdir(output_dir):
                 self.output_dir = output_dir
@@ -310,8 +309,8 @@ class WLmap:
         # Set up wave vectors and scale by the map in radians
         grid_range = np.arange(self.map_size, dtype='float') - (int(self.map_size) - 1) / 2
         l1, l2 = np.meshgrid(grid_range, grid_range)
-        l1 = np.roll(l1, int(self.map_size)/2, axis=1) * 2.0 * np.pi / (np.pi/180.0 * self.opening_angle)
-        l2 = np.roll(l2, int(self.map_size)/2, axis=0) * 2.0 * np.pi / (np.pi/180.0 * self.opening_angle)
+        l1 = np.roll(l1, int(self.map_size/2), axis=1) * 2.0 * np.pi / (np.pi/180.0 * self.opening_angle)
+        l2 = np.roll(l2, int(self.map_size/2), axis=0) * 2.0 * np.pi / (np.pi/180.0 * self.opening_angle)
         
         # Remove bottom-right corner zero to stop division by zero on next 2 lines
         # The zero edge padding for the kappa map removes this effect later
