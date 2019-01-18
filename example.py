@@ -3,7 +3,7 @@ import WLmap as wlm
 # WLmap has 1 class/object aptly named WLmap. It requires the 5 input arguments given below 
 # which are set at their default values here. It will read or calculate everything else automatically, such
 # as the cosmology of the simulation.
-sim_dir = '/hpcdata2/simulations/BAHAMAS/AGN_TUNED_nu0.06_L400N1024_WMAP9/Data/Snapshots'
+sim_dir = '/example/simulation/data'
 z_max = 3
 opening_angle = 5 #in degrees
 plane_sep = 50 #in Mpc
