@@ -35,8 +35,8 @@ m.gen_convergence_map()
 kappa = m.convergence_map
 
 m.gen_shear_maps()
-shear1 = m.shear1
-shear2 = m.shear2
+shear1 = m.shear1_map
+shear2 = m.shear2_map
 
 # We can save the stored lightcone and/or the calculated maps as HDF5 files in the defined
 # ouput directory. It will save them seperately as 'filename_lightcone.hdf5' and 'filename_maps.hdf5'.
