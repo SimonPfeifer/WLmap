@@ -9,12 +9,8 @@ opening_angle = 5 #in degrees
 plane_sep = 50 #in Mpc
 map_size =  1800 #in pixels per side
 
-# We can also set an output directory which is set to the working directory otherwise
-# Note: The output directory must already exist
-output_dir = '.'
-
 # Let's initialise WLmap
-m = wlm.WLmap(sim_dir=sim_dir, output_dir=output_dir, z_max=z_max, opening_angle=opening_angle,
+m = wlm.WLmap(sim_dir=sim_dir, z_max=z_max, opening_angle=opening_angle,
                              plane_sep = plane_sep, map_size=map_size)
 
 # WLmap builds lightcones/lense planes by stacking snapshots out to a maximum redshift, z_max. The 
@@ -42,11 +38,11 @@ shear2 = m.shear2_map
 # ouput directory. It will save them seperately as 'filename_lightcone.hdf5' and 'filename_maps.hdf5'.
 # Each HDF5 file will also contain a 'Header' group that contains all important information WLmap needs 
 # to reproduce a lightcone with the same input parameters and cosmology.
-m.save_data(filename='example')
+m.save_data(filename='./example')
 
 
 # We can initialising WLmap with a 'Header' from a lightcone or maps HDF5 file.
-m = wlm.WLmap(load_header='./example_lightcone.hdf5', output_dir=output_dir)
+m = wlm.WLmap(load_header='./example_lightcone.hdf5')
 
 # We can also load a lightcone and convergence and shear maps. This will read the 'Header' and 
 # re-initilaise by default.
@@ -57,4 +53,4 @@ m.load_map(filename='./example_maps.hdf5', map_name='convergence', load_header=F
 m.load_map(filename='./example_maps.hdf5', map_name='shear', load_header=False)
 
 # Alternatively, initialise by loading a lightcone
-m = wlm.WLmap(load_lightcone='./example_lightcone.hdf5', output_dir=output_dir)
+m = wlm.WLmap(load_lightcone='./example_lightcone.hdf5')

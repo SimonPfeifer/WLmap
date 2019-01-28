@@ -12,7 +12,7 @@ def module_exists(module_name):
         return True
 
 class WLmap:
-    def __init__(self, sim_dir=None, output_dir=None, load_header=None, load_lightcone=None,
+    def __init__(self, sim_dir=None, load_header=None, load_lightcone=None,
                         z_max=3, opening_angle=5, plane_sep=50, map_size=1800, seed=None):
         if load_header is not None:
             self.load_header(filename=load_header)
@@ -28,20 +28,12 @@ class WLmap:
                 self.seed = np.random.randint(1E6)
             else:
                 self.seed = seed
-        if not os.path.isdir(sim_dir):
-            raise ValueError('Simulation directory does not exist: {}'.format(sim_dir))
-        if output_dir is not None:
-            if os.path.isdir(output_dir):
-                self.output_dir = output_dir
-            else:
-                raise ValueError('Output directory does not exist: {}'.format(output_dir))
-        else:
-            self.output_dir = os.getcwd()
         # Make sure strings are not in bytes
         if type(self.sim_dir) is bytes:
                 self.sim_dir = self.sim_dir.decode('UTF-8')
-        if type(self.output_dir) is bytes:
-                self.output_dir = self.output_dir.decode('UTF-8')
+        # Check paths exist
+        if not os.path.isdir(self.sim_dir):
+            raise ValueError('Simulation directory does not exist: {}'.format(sim_dir))
                 
         # Simulation data
         self.snap_dir = [d for d in next(os.walk(self.sim_dir))[1] if d.startswith('snap')] # check available snapshots
@@ -345,7 +337,7 @@ class WLmap:
         '''Save all important data from current class instance.'''
         if lightcone:
             # Create a file for the lightcone
-            with h5py.File(self.output_dir + '/' + filename + '_lightcone.hdf5', 'w') as f:
+            with h5py.File(filename + '_lightcone.hdf5', 'w') as f:
                 self.gen_header(f)
                 # Lightcone
                 lc = f.require_group('Lightcone')
@@ -362,7 +354,7 @@ class WLmap:
                                                     dtype='float64', data=self.lightcone[2])
         if maps:
             # Create a file for the maps and any other data
-            with h5py.File(self.output_dir + '/' + filename + '_maps.hdf5', 'w') as f:
+            with h5py.File(filename + '_maps.hdf5', 'w') as f:
                 self.gen_header(f)
                 # Cosmic shear
                 if self.convergence_map is not None or self.shear1_map is not None or self.shear2_map is not None:
